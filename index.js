@@ -34,6 +34,7 @@ server.post("/api/users", (req, res) => {
           });
         });
 });
+
 server.get("/api/users", (req, res) => {
   db.find()
     .then(users => {
@@ -46,6 +47,7 @@ server.get("/api/users", (req, res) => {
       });
     });
 });
+
 server.get("/api/users/:id", (req, res) => {
   const { id } = req.params;
   db.findById(id)
@@ -63,13 +65,15 @@ server.get("/api/users/:id", (req, res) => {
       });
     });
 });
+
 server.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
   db.remove(id)
     .then(user => {
       user
         ? res.status(200).json({
-            message: "User has been removed", id
+            message: "User has been removed",
+            id
           })
         : res.status(404).json({
             message: "The user with the specified ID does not exist."
@@ -82,6 +86,7 @@ server.delete("/api/users/:id", (req, res) => {
       });
     });
 });
+
 server.put("/api/users/:id", (req, res) => {
   const { id } = req.params;
   const info = req.body;
@@ -96,11 +101,9 @@ server.put("/api/users/:id", (req, res) => {
         .then(user => {
           user
             ? res.status(200).json({ user, info })
-            : res
-                .status(404)
-                .json({
-                  message: "The user with the specified ID does not exist."
-                });
+            : res.status(404).json({
+                message: "The user with the specified ID does not exist."
+              });
         })
         .catch(err => {
           res.status(500).json({
